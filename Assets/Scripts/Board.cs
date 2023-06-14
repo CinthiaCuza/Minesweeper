@@ -4,22 +4,72 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    public GameObject tile;
+    public static Board instance;
+    public GameController controllerClass;
 
-    void Start()
+    public GameObject tile;
+    public Tile[,] boardDataBase;
+
+    [HideInInspector] public int maxTiles;
+    [HideInInspector] public int maxMines;
+
+    [HideInInspector] public int rows;
+    [HideInInspector] public int columns;
+
+
+    private void Awake()
     {
-        StartBoard();
+        instance = this;
     }
 
-    public void StartBoard()
+    public void LevelSettings(int levelSelected)
     {
-        for (int i = 0; i < GameController.instance.maxTiles; i++) Instantiate(tile, transform);
+        if (levelSelected == 0)
+        {
+            rows = columns = 8;
+            maxTiles = rows * columns;
+            maxMines = 10;
+        }
+        else if (levelSelected == 1)
+        {
+            rows = columns = 16;
+            maxTiles = rows * columns;
+            maxMines = 40;
+        }
+        else if (levelSelected == 2)
+        {
+            rows = 30;
+            columns = 16;
+            maxTiles = 480;
+            maxMines = 99;
+        }
+
+        controllerClass.textRemainingMines.text = maxMines.ToString();
+        CreateBoard();
+    }
+
+    public void CreateBoard()
+    {
+        boardDataBase = new Tile[rows, columns];
+
+        for (int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < columns; j++)
+            {
+                GameObject newTile = Instantiate(tile, transform);
+
+                Vector2Int posNewTile = new Vector2Int(i, j);
+                newTile.transform.GetComponent<Tile>().pos = posNewTile;
+
+                boardDataBase[i, j] = newTile.transform.GetComponent<Tile>();
+            }
+        }
 
         List<int> minesPos = new List<int>();
 
-        while (minesPos.Count < GameController.instance.maxMines)
+        while (minesPos.Count < maxMines)
         {
-            int randomPos = Random.Range(0, GameController.instance.maxTiles);
+            int randomPos = Random.Range(0, maxTiles);
 
             if (!minesPos.Contains(randomPos))
             {

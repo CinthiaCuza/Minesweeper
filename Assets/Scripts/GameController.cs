@@ -3,31 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public static GameController instance;
+    public static UnityEvent GameOverEvent;
 
     public TMP_Text textRemainingMines;
 
-    public int maxTiles;
-    public int maxMines;
     public int markedMines;
 
-    private void Awake()
-    {
-        instance = this;
-    }
+    public Image restartEmojiImg;
+    public Sprite[] restartEmojiImgs = new Sprite[2];
 
     private void Start()
     {
-        textRemainingMines.text = maxMines.ToString();
+        if (GameOverEvent == null) GameOverEvent = new UnityEvent();
+        GameOverEvent.AddListener(GameOverEmoji);
     }
 
     public void UpdateCounter()
     {
         markedMines++;
-        int remainingMines = maxMines - markedMines;
+        int remainingMines = Board.instance.maxMines - markedMines;
 
         textRemainingMines.text = remainingMines.ToString();
     }
@@ -35,5 +34,10 @@ public class GameController : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void GameOverEmoji()
+    {
+        restartEmojiImg.sprite = restartEmojiImgs[1];
     }
 }
