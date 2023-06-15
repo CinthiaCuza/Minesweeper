@@ -2,14 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.SceneManagement;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public static UIController instance;
-    public static UnityEvent GameOverEvent;
+    /*public static UIController instance;
 
     public Board board;
 
@@ -27,17 +24,12 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        Emoji(0);
-        if (GameOverEvent == null) GameOverEvent = new UnityEvent();
+        restartEmojiImg.sprite = restartEmojiImgs[0];
+        markedMines = 0;
 
         board.CreateBoard();
-        textRemainingMines.text = board.maxMines.ToString();
-    }
 
-    public void LevelSettings(int difficultySelected)
-    {
-        GameController.instance.difficulty = difficultySelected;
-        RestartGame();
+        textRemainingMines.text = board.maxMines.ToString();
     }
 
     public void UpdateCounter()
@@ -46,16 +38,5 @@ public class UIController : MonoBehaviour
         int remainingMines = board.maxMines - markedMines;
 
         textRemainingMines.text = remainingMines.ToString();
-    }
-
-    public void RestartGame()
-    {
-        markedMines = 0;
-        SceneManager.LoadScene(0);
-    }
-
-    public void Emoji(int emoji)
-    {
-        restartEmojiImg.sprite = restartEmojiImgs[emoji];
-    }
+    }*/
 }

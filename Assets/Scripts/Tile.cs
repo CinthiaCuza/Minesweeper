@@ -15,6 +15,7 @@ public enum State
 
 public class Tile : MonoBehaviour, IPointerClickHandler
 {
+    [HideInInspector] public Board boardParent;
     public bool isMine;
 
     public Image backImg;
@@ -33,80 +34,100 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     private bool isGameOver;
     Color numberColor = new Color();
 
+    public List<Vector2Int> posAround = new List<Vector2Int>();
+
     void Start()
     {
-        UIController.GameOverEvent.AddListener(ShowMine);
+        GameController.GameOverEvent.AddListener(ShowMine);
+        GameController.RestartEvent.AddListener(DestroyTile);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!isGameOver)
         {
-            if (eventData.button == PointerEventData.InputButton.Left)
+            if (eventData.button == PointerEventData.InputButton.Left) LeftClick();
+            if (eventData.button == PointerEventData.InputButton.Right) RightClick();
+        }
+    }
+
+    public void LeftClick()
+    {
+        if (state.Equals(State.Unknown))
+        {
+            backImg.enabled = false;
+            state = State.Known;
+
+            if (isMine)
             {
-                if (state.Equals(State.Unknown))
-                {
-                    backImg.enabled = false;
-                    state = State.Known;
+                mineImg.sprite = mineImgs[0];
+                mineImg.gameObject.SetActive(true);
 
-                    if (isMine)
-                    {
-                        mineImg.sprite = mineImgs[0];
-                        mineImg.gameObject.SetActive(true);
-
-                        UIController.instance.Emoji(1);
-                        UIController.GameOverEvent.Invoke();
-                    }
-                    else
-                    {
-                        CalculateMinesAround();
-                    }
-                }
+                boardParent.restartEmojiImg.sprite = boardParent.gameController.restartEmojiImgs[1];
+                GameController.GameOverEvent.Invoke();
             }
-
-            if (eventData.button == PointerEventData.InputButton.Right)
+            else
             {
-                if (state.Equals(State.Unknown))
-                {
-                    state = State.PossibleMine;
-                    backImg.sprite = backImgs[1];
-                }
-                else if (state.Equals(State.PossibleMine))
-                {
-                    state = State.Unknown;
-                    backImg.sprite = backImgs[0];
-                }
-
-                UIController.instance.UpdateCounter();
+                CalculateMinesAround();
             }
         }
+    }
+
+    public void RightClick()
+    {
+        if (state.Equals(State.Unknown))
+        {
+            state = State.PossibleMine;
+            backImg.sprite = backImgs[1];
+            boardParent.UpdateCounter(1);
+        }
+        else if (state.Equals(State.PossibleMine))
+        {
+            state = State.Unknown;
+            backImg.sprite = backImgs[0];
+            boardParent.UpdateCounter(-1);
+        }
+    }
+
+    public void CalculatePosAround()
+    {
+        int rows = boardParent.rows;
+        int columns = boardParent.columns;
+
+        if (pos.x - 1 >= 0 && pos.x - 1 < rows && pos.y - 1 >= 0 && pos.y - 1 < columns)
+            posAround.Add(new Vector2Int(pos.x - 1, pos.y - 1));
+
+        if (pos.x - 1 >= 0 && pos.x - 1 < rows && pos.y >= 0 && pos.y < columns)
+            posAround.Add(new Vector2Int(pos.x - 1, pos.y));
+
+        if (pos.x - 1 >= 0 && pos.x - 1 < rows && pos.y + 1 >= 0 && pos.y + 1 < columns)
+            posAround.Add(new Vector2Int(pos.x - 1, pos.y + 1));
+
+        if (pos.x >= 0 && pos.x < rows && pos.y - 1 >= 0 && pos.y - 1 < columns)
+            posAround.Add(new Vector2Int(pos.x, pos.y - 1));
+
+        if (pos.x >= 0 && pos.x < rows && pos.y + 1 >= 0 && pos.y + 1 < columns)
+            posAround.Add(new Vector2Int(pos.x, pos.y + 1));
+
+        if (pos.x + 1 >= 0 && pos.x + 1 < rows && pos.y - 1 >= 0 && pos.y - 1 < columns)
+            posAround.Add(new Vector2Int(pos.x + 1, pos.y - 1));
+
+        if (pos.x + 1 >= 0 && pos.x + 1 < rows && pos.y >= 0 && pos.y < columns)
+            posAround.Add(new Vector2Int(pos.x + 1, pos.y));
+
+        if (pos.x + 1 >= 0 && pos.x + 1 < rows && pos.y + 1 >= 0 && pos.y + 1 < columns)
+            posAround.Add(new Vector2Int(pos.x + 1, pos.y + 1));
     }
 
     public void CalculateMinesAround()
     {
-        AuxCalculateMinesAround(pos.x - 1, pos.y - 1);
-        AuxCalculateMinesAround(pos.x - 1, pos.y);
-        AuxCalculateMinesAround(pos.x - 1, pos.y + 1);
-
-        AuxCalculateMinesAround(pos.x, pos.y - 1);
-        AuxCalculateMinesAround(pos.x, pos.y + 1);
-
-        AuxCalculateMinesAround(pos.x + 1, pos.y - 1);
-        AuxCalculateMinesAround(pos.x + 1, pos.y);
-        AuxCalculateMinesAround(pos.x + 1, pos.y + 1);
+        for (int i = 0; i < posAround.Count; i++)
+        {
+            if (boardParent.boardDataBase[posAround[i].x, posAround[i].y].isMine) minesAround++;
+        }
 
         if (minesAround != 0) NumberColor();
-    }
-
-    public void AuxCalculateMinesAround(int posF, int posC)
-    {
-        int rows = UIController.instance.board.rows;
-        int columns = UIController.instance.board.columns;
-
-        if (posF >= 0 && posF < rows && posC >= 0 && posC < columns)
-        {
-            if (UIController.instance.board.boardDataBase[posF, posC].isMine) minesAround++;
-        }
+        else ExpandMap();
     }
 
     public void NumberColor()
@@ -129,11 +150,25 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         isGameOver = true;
 
-        if (isMine && mineImg.sprite == null)
+        if (isMine && mineImg.sprite == null && !state.Equals(State.PossibleMine))
         {
             backImg.enabled = false;
             mineImg.sprite = mineImgs[1];
             mineImg.gameObject.SetActive(true);
         }
+    }
+
+    public void ExpandMap()
+    {
+        for (int i = 0; i < posAround.Count; i++)
+        {
+            Tile tileAround = boardParent.boardDataBase[posAround[i].x, posAround[i].y];
+            if (!tileAround.isMine) tileAround.LeftClick();
+        }
+    }
+
+    public void DestroyTile()
+    {
+        Destroy(gameObject);
     }
 }
