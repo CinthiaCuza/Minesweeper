@@ -35,7 +35,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     void Start()
     {
-        GameController.GameOverEvent.AddListener(ShowMine);
+        UIController.GameOverEvent.AddListener(ShowMine);
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -54,7 +54,8 @@ public class Tile : MonoBehaviour, IPointerClickHandler
                         mineImg.sprite = mineImgs[0];
                         mineImg.gameObject.SetActive(true);
 
-                        GameController.GameOverEvent.Invoke();
+                        UIController.instance.Emoji(1);
+                        UIController.GameOverEvent.Invoke();
                     }
                     else
                     {
@@ -76,7 +77,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
                     backImg.sprite = backImgs[0];
                 }
 
-                Board.instance.controllerClass.UpdateCounter();
+                UIController.instance.UpdateCounter();
             }
         }
     }
@@ -99,12 +100,12 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     public void AuxCalculateMinesAround(int posF, int posC)
     {
-        int rows = Board.instance.rows;
-        int columns = Board.instance.columns;
+        int rows = UIController.instance.board.rows;
+        int columns = UIController.instance.board.columns;
 
         if (posF >= 0 && posF < rows && posC >= 0 && posC < columns)
         {
-            if (Board.instance.boardDataBase[posF, posC].isMine) minesAround++;
+            if (UIController.instance.board.boardDataBase[posF, posC].isMine) minesAround++;
         }
     }
 

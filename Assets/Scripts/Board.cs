@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Board : MonoBehaviour
 {
-    public static Board instance;
-    public GameController controllerClass;
-
     public GameObject tile;
     public Tile[,] boardDataBase;
 
@@ -16,40 +13,10 @@ public class Board : MonoBehaviour
     [HideInInspector] public int rows;
     [HideInInspector] public int columns;
 
-
-    private void Awake()
-    {
-        instance = this;
-    }
-
-    public void LevelSettings(int levelSelected)
-    {
-        if (levelSelected == 0)
-        {
-            rows = columns = 8;
-            maxTiles = rows * columns;
-            maxMines = 10;
-        }
-        else if (levelSelected == 1)
-        {
-            rows = columns = 16;
-            maxTiles = rows * columns;
-            maxMines = 40;
-        }
-        else if (levelSelected == 2)
-        {
-            rows = 30;
-            columns = 16;
-            maxTiles = 480;
-            maxMines = 99;
-        }
-
-        controllerClass.textRemainingMines.text = maxMines.ToString();
-        CreateBoard();
-    }
-
     public void CreateBoard()
     {
+        DifficultyData();
+
         boardDataBase = new Tile[rows, columns];
 
         for (int i = 0; i < rows; i++)
@@ -78,6 +45,29 @@ public class Board : MonoBehaviour
                 GameObject tileWithMine = transform.GetChild(randomPos).gameObject;
                 tileWithMine.GetComponent<Tile>().isMine = true;
             }
+        }
+    }
+
+    public void DifficultyData()
+    {
+        if (GameController.instance.difficulty == 0)
+        {
+            rows = columns = 8;
+            maxTiles = rows * columns;
+            maxMines = 10;
+        }
+        else if (GameController.instance.difficulty == 1)
+        {
+            rows = columns = 16;
+            maxTiles = rows * columns;
+            maxMines = 40;
+        }
+        else if (GameController.instance.difficulty == 2)
+        {
+            rows = 30;
+            columns = 16;
+            maxTiles = 480;
+            maxMines = 99;
         }
     }
 }
