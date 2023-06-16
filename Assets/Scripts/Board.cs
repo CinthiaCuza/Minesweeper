@@ -9,19 +9,20 @@ public class Board : MonoBehaviour
     public GameController gameController;
     public GameObject gridBoard;
 
-    public Tile[,] boardDataBase;
-
     [HideInInspector] public int maxTiles;
     [HideInInspector] public int maxMines;
-
     [HideInInspector] public int rows;
     [HideInInspector] public int columns;
 
     public TMP_Text textRemainingMines;
-
+    public Image restartEmojiImg;
     public int markedMines;
 
-    public Image restartEmojiImg;
+    public Tile[,] boardDataBase;
+
+    public List<Tile> possibleMinesList = new List<Tile>();
+    public List<Tile> isMinesList = new List<Tile>();
+    public List<Tile> tileWithNumberList = new List<Tile>();
 
     private void Start()
     {
@@ -50,15 +51,15 @@ public class Board : MonoBehaviour
             }
         }
 
-        List<int> minesPos = new List<int>();
+        List<int> minesPosList = new List<int>();
 
-        while (minesPos.Count < maxMines)
+        while (minesPosList.Count < maxMines)
         {
             int randomPos = Random.Range(0, maxTiles);
 
-            if (!minesPos.Contains(randomPos))
+            if (!minesPosList.Contains(randomPos))
             {
-                minesPos.Add(randomPos);
+                minesPosList.Add(randomPos);
 
                 Tile tileWithMine = gridBoard.transform.GetChild(randomPos).GetComponent<Tile>();
 
@@ -103,7 +104,7 @@ public class Board : MonoBehaviour
 
     public void RestartButton()
     { 
-        restartEmojiImg.sprite = gameController.restartEmojiImgs[0];
+        restartEmojiImg.sprite = gameController.emojisArray[0];
         GameController.RestartEvent.Invoke();
 
         markedMines = 0;
