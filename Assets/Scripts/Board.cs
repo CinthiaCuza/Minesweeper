@@ -10,44 +10,72 @@ public class Board : MonoBehaviour
     public GameObject gridBoard;
 
     [HideInInspector] public int maxTiles;
-    [HideInInspector] public int maxMines;
-    [HideInInspector] public int rows;
-    [HideInInspector] public int columns;
+    [HideInInspector] public int maxMines = 10;
+    [HideInInspector] public int maxrows;
+    [HideInInspector] public int maxcolumns;
 
-    public TMP_Text textRemainingMines;
     public Image restartEmojiImg;
-    public int markedMines;
+    public TMP_Text textRemainingMines;
 
-    public Tile[,] boardDataBase;
+    [HideInInspector] public Tile[,] boardDataBase;
 
-    public List<Tile> possibleMinesList = new List<Tile>();
-    public List<Tile> isMinesList = new List<Tile>();
-    public List<Tile> tileWithNumberList = new List<Tile>();
+    [HideInInspector] public List<Tile> possibleMinesList = new List<Tile>();
+    [HideInInspector] public List<Tile> isMinesList = new List<Tile>();
+    [HideInInspector] public List<Tile> tileWithNumberList = new List<Tile>();
+
+    [HideInInspector] public bool boardChange;
+    [HideInInspector] public bool isGameOver;
+    [HideInInspector] public bool botPlaying;
 
     private void Start()
     {
         DifficultyData();
-
-        boardDataBase = new Tile[rows, columns];
-
         CreateBoard();
     }
 
-    public void CreateBoard()
+    private void DifficultyData()
     {
-        for (int i = 0; i < rows; i++)
+        switch (gameController.difficulty)
         {
-            for(int j = 0; j < columns; j++)
+            case 0:
+                maxrows = maxcolumns = 8;
+                maxTiles = maxrows * maxcolumns;
+                maxMines = 10;
+                break;
+            case 1:
+                maxrows = maxcolumns = 16;
+                maxTiles = maxrows * maxcolumns;
+                maxMines = 40;
+                break;
+            case 2:
+                maxrows = 30;
+                maxcolumns = 16;
+                maxTiles = 480;
+                maxMines = 99;
+                break;
+        }
+
+        boardDataBase = new Tile[maxrows, maxcolumns];
+    }
+
+    private void CreateBoard()
+    {
+        textRemainingMines.text = maxMines.ToString();
+
+        for (int i = 0; i < maxrows; i++)
+        {
+            for(int j = 0; j < maxcolumns; j++)
             {
                 GameObject newTile = Instantiate(gameController.tile, gridBoard.transform);
-
-                newTile.GetComponent<Tile>().boardParent = this;
-
+                
+                Tile tileClass = newTile.GetComponent<Tile>();
                 Vector2Int posNewTile = new Vector2Int(i, j);
-                newTile.transform.GetComponent<Tile>().pos = posNewTile;
-                newTile.transform.GetComponent<Tile>().CalculatePosAround();
 
-                boardDataBase[i, j] = newTile.transform.GetComponent<Tile>();
+                tileClass.boardParent = this;
+                tileClass.pos = posNewTile;
+                tileClass.CalculatePosAround();
+
+                boardDataBase[i, j] = tileClass;
             }
         }
 
@@ -62,52 +90,37 @@ public class Board : MonoBehaviour
                 minesPosList.Add(randomPos);
 
                 Tile tileWithMine = gridBoard.transform.GetChild(randomPos).GetComponent<Tile>();
-
-                tileWithMine.isMine = true;
                 boardDataBase[tileWithMine.pos.x, tileWithMine.pos.y].isMine = true;
             }
         }
-
-        textRemainingMines.text = maxMines.ToString();
     }
 
-    public void DifficultyData()
+    public void UpdateCounter()
     {
-        if (gameController.difficulty == 0)
-        {
-            rows = columns = 8;
-            maxTiles = rows * columns;
-            maxMines = 10;
-        }
-        else if (gameController.difficulty == 1)
-        {
-            rows = columns = 16;
-            maxTiles = rows * columns;
-            maxMines = 40;
-        }
-        else if (gameController.difficulty == 2)
-        {
-            rows = 30;
-            columns = 16;
-            maxTiles = 480;
-            maxMines = 99;
-        }
-    }
+        int maxFlags = possibleMinesList.Count + isMinesList.Count;
+        int remainingMines = maxMines - maxFlags;
 
-    public void UpdateCounter(int point)
-    {
-        markedMines += point;
-        int remainingMines = maxMines - markedMines;
+        if(remainingMines >= 0) textRemainingMines.text = remainingMines.ToString("D2");
 
-        textRemainingMines.text = remainingMines.ToString();
+        if (isMinesList.Count == maxMines)
+        {
+            isGameOver = true;
+            GameController.GameOverEvent.Invoke();
+        }
     }
 
     public void RestartButton()
-    { 
-        restartEmojiImg.sprite = gameController.emojisArray[0];
+    {
         GameController.RestartEvent.Invoke();
 
-        markedMines = 0;
+        restartEmojiImg.sprite = gameController.emojisArray[0];
+        
+        isGameOver = boardChange = false;
+
+        possibleMinesList.Clear();
+        isMinesList.Clear();
+        tileWithNumberList.Clear();
+
         CreateBoard();
     }
 }

@@ -326,22 +326,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1356989407}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 160020313}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 5955089853666731791}
+        m_TargetAssemblyTypeName: Bot, Assembly-CSharp
+        m_MethodName: StopBot
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -370,7 +358,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: de7c4aaa3703e3344b733120b5404681, type: 3}
+  m_Sprite: {fileID: -1975127399, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -578,7 +566,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 07e455c1c51761a468038e3bdfb5984a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 446b4d3d92b5b8345a690cc5c6056621, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -746,7 +734,7 @@ SpriteRenderer:
   m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &568241188
@@ -879,7 +867,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bca62e14400da6b4a8b129554bc27d70, type: 3}
+  m_Sprite: {fileID: 868686218, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1343,7 +1331,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 07e455c1c51761a468038e3bdfb5984a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 446b4d3d92b5b8345a690cc5c6056621, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1579,10 +1567,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 160020313}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 5955089853666731791}
+        m_TargetAssemblyTypeName: Bot, Assembly-CSharp
+        m_MethodName: PlayBot
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1590,18 +1578,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1356989407}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1356989410
 MonoBehaviour:
@@ -1623,7 +1599,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: de7c4aaa3703e3344b733120b5404681, type: 3}
+  m_Sprite: {fileID: -921560844, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1704,22 +1680,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1480165030}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1382621148}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2814427303412060157}
+        m_TargetAssemblyTypeName: Bot, Assembly-CSharp
+        m_MethodName: StopBot
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1748,7 +1712,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: de7c4aaa3703e3344b733120b5404681, type: 3}
+  m_Sprite: {fileID: -1975127399, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1914,7 +1878,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 07e455c1c51761a468038e3bdfb5984a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 446b4d3d92b5b8345a690cc5c6056621, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2015,22 +1979,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1382621148}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1480165030}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 2814427303412060157}
+        m_TargetAssemblyTypeName: Bot, Assembly-CSharp
+        m_MethodName: PlayBot
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2059,7 +2011,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: de7c4aaa3703e3344b733120b5404681, type: 3}
+  m_Sprite: {fileID: -921560844, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2202,22 +2154,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2028143759}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1755259648}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 267451846499150397}
+        m_TargetAssemblyTypeName: Bot, Assembly-CSharp
+        m_MethodName: StopBot
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2246,7 +2186,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 40375ab38daa64541a6851c78095cf52, type: 3}
+  m_Sprite: {fileID: -1975127399, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2671,30 +2611,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1755259648}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 2028143759}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 267451846499150397}
         m_TargetAssemblyTypeName: Bot, Assembly-CSharp
         m_MethodName: PlayBot
@@ -2727,7 +2643,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: de7c4aaa3703e3344b733120b5404681, type: 3}
+  m_Sprite: {fileID: -921560844, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2780,8 +2696,8 @@ MonoBehaviour:
   - {fileID: 5955089853666731789}
   - {fileID: 2814427303412060149}
   emojisArray:
-  - {fileID: 21300000, guid: 8798610b4aed7414e87c03031b2d2233, type: 3}
-  - {fileID: 21300000, guid: 201e87ca8955d454ca11916d068eec2d, type: 3}
+  - {fileID: -1292447379, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
+  - {fileID: -845917399, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   difficulty: 0
 --- !u!4 &2054086088
 Transform:
@@ -2894,13 +2810,16 @@ MonoBehaviour:
   gridBoard: {fileID: 267451847204700843}
   maxTiles: 0
   maxMines: 0
-  rows: 0
-  columns: 0
-  textRemainingMines: {fileID: 267451847461013313}
-  markedMines: 0
+  maxrows: 0
+  maxcolumns: 0
   restartEmojiImg: {fileID: 985709396948376886}
+  textRemainingMines: {fileID: 267451847461013313}
   possibleMinesList: []
+  isMinesList: []
   tileWithNumberList: []
+  boardChange: 0
+  isGameOver: 0
+  botPlaying: 0
 --- !u!114 &267451846499150397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2914,6 +2833,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   board: {fileID: 267451846499150396}
+  PlayButton: {fileID: 2028143759}
+  StopButton: {fileID: 1755259648}
 --- !u!222 &267451846983936337
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2981,7 +2902,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d76401a015fbac74b8122bb977ab1085, type: 3}
+  m_Sprite: {fileID: -489777674, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3168,7 +3089,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 130
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
@@ -3220,10 +3141,10 @@ RectTransform:
   m_Father: {fileID: 267451847545737451}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.8, y: -3.1}
-  m_SizeDelta: {x: 117.98, y: 95.183}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 1.0172491, y: -3}
+  m_SizeDelta: {x: 2.0344982, y: 0.306}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &267451847461013327
 GameObject:
@@ -3340,7 +3261,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fa5110f1ae0b6747bafd452e2f71fa4, type: 3}
+  m_Sprite: {fileID: -442245005, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3520,7 +3441,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8798610b4aed7414e87c03031b2d2233, type: 3}
+  m_Sprite: {fileID: -1292447379, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3725,7 +3646,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fa5110f1ae0b6747bafd452e2f71fa4, type: 3}
+  m_Sprite: {fileID: -442245005, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3755,6 +3676,7 @@ GameObject:
   - component: {fileID: 2814427303412060152}
   - component: {fileID: 2814427303412060155}
   - component: {fileID: 2814427303412060156}
+  - component: {fileID: 2814427303412060157}
   m_Layer: 5
   m_Name: ExperBoard
   m_TagString: Untagged
@@ -3838,13 +3760,31 @@ MonoBehaviour:
   gridBoard: {fileID: 2814427303655242974}
   maxTiles: 0
   maxMines: 0
-  rows: 0
-  columns: 0
-  textRemainingMines: {fileID: 2814427304814250544}
-  markedMines: 0
+  maxrows: 0
+  maxcolumns: 0
   restartEmojiImg: {fileID: 2814427304545626622}
+  textRemainingMines: {fileID: 2814427304814250544}
   possibleMinesList: []
+  isMinesList: []
   tileWithNumberList: []
+  boardChange: 0
+  isGameOver: 0
+  botPlaying: 0
+--- !u!114 &2814427303412060157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2814427303412060149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c1bd23315c26ec4cbc1c0613c986c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  board: {fileID: 2814427303412060156}
+  PlayButton: {fileID: 1480165030}
+  StopButton: {fileID: 1382621148}
 --- !u!114 &2814427303655242973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4021,7 +3961,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d76401a015fbac74b8122bb977ab1085, type: 3}
+  m_Sprite: {fileID: -489777674, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4255,7 +4195,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8798610b4aed7414e87c03031b2d2233, type: 3}
+  m_Sprite: {fileID: -1292447379, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4428,7 +4368,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d76401a015fbac74b8122bb977ab1085, type: 3}
+  m_Sprite: {fileID: -489777674, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4608,7 +4548,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6fa5110f1ae0b6747bafd452e2f71fa4, type: 3}
+  m_Sprite: {fileID: -442245005, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4746,6 +4686,7 @@ GameObject:
   - component: {fileID: 5955089853666731786}
   - component: {fileID: 5955089853666731787}
   - component: {fileID: 5955089853666731790}
+  - component: {fileID: 5955089853666731791}
   m_Layer: 5
   m_Name: IntermediateBoard
   m_TagString: Untagged
@@ -4769,13 +4710,31 @@ MonoBehaviour:
   gridBoard: {fileID: 5955089855101125579}
   maxTiles: 0
   maxMines: 0
-  rows: 0
-  columns: 0
-  textRemainingMines: {fileID: 5955089854888135941}
-  markedMines: 0
+  maxrows: 0
+  maxcolumns: 0
   restartEmojiImg: {fileID: 5955089854824403986}
+  textRemainingMines: {fileID: 5955089854888135941}
   possibleMinesList: []
+  isMinesList: []
   tileWithNumberList: []
+  boardChange: 0
+  isGameOver: 0
+  botPlaying: 0
+--- !u!114 &5955089853666731791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5955089853666731789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c1bd23315c26ec4cbc1c0613c986c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  board: {fileID: 5955089853666731790}
+  PlayButton: {fileID: 1356989407}
+  StopButton: {fileID: 160020313}
 --- !u!222 &5955089854540859379
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4881,7 +4840,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8798610b4aed7414e87c03031b2d2233, type: 3}
+  m_Sprite: {fileID: -1292447379, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5122,10 +5081,10 @@ RectTransform:
   m_Father: {fileID: 5955089854540859381}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 1, y: -3}
-  m_SizeDelta: {x: 121.588, y: 96.306}
+  m_SizeDelta: {x: 5.5879974, y: 0.30599976}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5955089854888135943
 GameObject:

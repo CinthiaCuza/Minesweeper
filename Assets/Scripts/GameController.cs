@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
     public static UnityEvent GameOverEvent;
     public static UnityEvent RestartEvent;
 
-    public GameObject[] boardsArray = new GameObject[3];
+    [SerializeField] private GameObject[] boardsArray = new GameObject[3];
     public Sprite[] emojisArray = new Sprite[2];
 
     public int difficulty = 0;
@@ -31,7 +31,6 @@ public class GameController : MonoBehaviour
 
             boardsArray[difficulty].SetActive(false);
             difficulty = difficultySelected;
-
             boardsArray[difficulty].SetActive(true);
         }
     }
