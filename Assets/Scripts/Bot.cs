@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Bot : MonoBehaviour
 {
-    [SerializeField] public Board board;
+    public Board board;
 
-    [SerializeField]  public GameObject PlayButton;
-    [SerializeField]  public GameObject StopButton;
+    public GameObject PlayButton;
+    public GameObject StopButton;
 
     private void Start()
     {
@@ -35,10 +35,8 @@ public class Bot : MonoBehaviour
 
     private IEnumerator InitBotPlaying()
     {
-        for (int i = 0; i < board.possibleMinesList.Count; i++)
+        foreach (Tile tile in board.possibleMinesList)
         {
-            Tile tile = board.possibleMinesList[i];
-
             tile.state = State.Unknown;
             tile.backImg.sprite = tile.backImgsArray[0];
         }
@@ -51,13 +49,13 @@ public class Bot : MonoBehaviour
             Tile tileToShow = board.boardDataBase[Random.Range(0, board.maxrows), Random.Range(0, board.maxcolumns)];
             tileToShow.backImg.sprite = tileToShow.backImgsArray[2];
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(board.gameController.botSpeedValue);
 
             tileToShow.LeftClick();
             board.boardChange = true;
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(board.gameController.botSpeedValue);
         StartCoroutine(BotPlaying());
     }
 
@@ -66,11 +64,11 @@ public class Bot : MonoBehaviour
         for (int i = 0; i < board.tileWithNumberList.Count; i++)
         {
             Tile tile = board.tileWithNumberList[i];
-            if (!tile.checkComplete) StartCoroutine(tile.FindMinesAround());
+            if (!tile.checkComplete) yield return StartCoroutine(tile.FindMinesAround());
             if (board.isGameOver) break;
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(board.gameController.botSpeedValue);
 
         for (int i = 0; i < board.isMinesList.Count; i++)
         {
@@ -79,14 +77,16 @@ public class Bot : MonoBehaviour
             for (int j = 0; j < mine.posAroundList.Count; j++)
             {
                 Tile tileAround = mine.boardParent.boardDataBase[mine.posAroundList[j].x, mine.posAroundList[j].y];
-                if (tileAround.state.Equals(State.Known) && !tileAround.checkComplete) StartCoroutine(tileAround.FindMinesAround());
+
+                if (tileAround.state.Equals(State.Known) && !tileAround.checkComplete)
+                    yield return StartCoroutine(tileAround.FindMinesAround());
             }
 
             if (board.isGameOver) break;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(board.gameController.botSpeedValue);
         }
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(board.gameController.botSpeedValue);
 
         if (board.boardChange)
         {
@@ -97,5 +97,6 @@ public class Bot : MonoBehaviour
         {
             StopBot();
         }
+            
     }
 }

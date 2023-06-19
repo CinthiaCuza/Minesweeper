@@ -15,16 +15,17 @@ public enum State
 
 public class Tile : MonoBehaviour, IPointerClickHandler
 {
-    [HideInInspector] public Board boardParent;
+    [HideInInspector] 
+    public Board boardParent;
 
-    [HideInInspector] public bool isMine;
-    [HideInInspector] public bool checkComplete;
+    public bool isMine;
+    public bool checkComplete;
 
     public Image backImg;
     public Sprite[] backImgsArray = new Sprite[3];
 
-    [SerializeField] public Image mineImg;
-    [SerializeField] public Sprite[] mineImgsArray = new Sprite[2];
+    public Image mineImg;
+    public Sprite[] mineImgsArray = new Sprite[2];
 
     public State state;
 
@@ -98,17 +99,14 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
                 GameController.GameOverEvent.Invoke();
             }
-            else
-            {
-                RevealTile();
-            }
+            else RevealTile();
         }
     }
     private void RevealTile()
     {
-        for (int i = 0; i < posAroundList.Count; i++)
+        foreach (Vector2Int vectorPos in posAroundList)
         {
-            if (boardParent.boardDataBase[posAroundList[i].x, posAroundList[i].y].isMine) minesAround++;
+            if (boardParent.boardDataBase[vectorPos.x, vectorPos.y].isMine) minesAround++;
         }
 
         if (minesAround != 0) NumberColor();
@@ -153,35 +151,36 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     private void ExpandMap()
     {
-        for (int i = 0; i < posAroundList.Count; i++)
+        foreach (Vector2Int vectorPos in posAroundList)
         {
-            Tile tileAround = boardParent.boardDataBase[posAroundList[i].x, posAroundList[i].y];
+            Tile tileAround = boardParent.boardDataBase[vectorPos.x, vectorPos.y];
             if (!tileAround.isMine) tileAround.LeftClick();
         }
     }
 
     private void RightClick()
     {
-        if (state.Equals(State.Unknown))
+        switch (state)
         {
-            state = State.PossibleMine;
-            backImg.sprite = backImgsArray[1];
-            boardParent.possibleMinesList.Add(this);
+            case State.Unknown:
+                state = State.PossibleMine;
+                backImg.sprite = backImgsArray[1];
+                boardParent.possibleMinesList.Add(this);
+                boardParent.UpdateCounter();
+                break;
+            case State.PossibleMine:
+                state = State.Unknown;
+                backImg.sprite = backImgsArray[0];
+                boardParent.possibleMinesList.Remove(this);
+                boardParent.UpdateCounter();
+                break;
+            case State.IsMine:
+                state = State.Unknown;
+                backImg.sprite = backImgsArray[0];
+                boardParent.isMinesList.Remove(this);
+                boardParent.UpdateCounter();
+                break;
         }
-        else if (state.Equals(State.PossibleMine))
-        {
-            state = State.Unknown;
-            backImg.sprite = backImgsArray[0];
-            boardParent.possibleMinesList.Remove(this);
-        }
-        else if (state.Equals(State.IsMine))
-        {
-            state = State.Unknown;
-            backImg.sprite = backImgsArray[0];
-            boardParent.isMinesList.Remove(this);
-        }
-
-        if(!state.Equals(State.Known)) boardParent.UpdateCounter();
     }
 
     private void ShowTileGO()
@@ -189,12 +188,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         if (state.Equals(State.Unknown) && boardParent.isMinesList.Count != boardParent.maxMines && isMine)
         {
             backImg.enabled = false;
-
             mineImg.sprite = mineImgsArray[1];
             mineImg.gameObject.SetActive(true);
         }
-
-        if (state.Equals(State.Unknown) && boardParent.isMinesList.Count == boardParent.maxMines) LeftClick();
+        else if (state.Equals(State.Unknown) && boardParent.isMinesList.Count == boardParent.maxMines) LeftClick();
     }
 
     private void DestroyTile()
@@ -209,9 +206,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         List<Vector2Int> possibleMinesAroundList = new List<Vector2Int>();
         int mines = 0;
 
-        for (int i = 0; i < posAroundList.Count; i++)
+        foreach (Vector2Int vectorPos in posAroundList)
         {
-            Tile tileAround = boardParent.boardDataBase[posAroundList[i].x, posAroundList[i].y];
+            Tile tileAround = boardParent.boardDataBase[vectorPos.x, vectorPos.y];
 
             if (tileAround.state.Equals(State.Unknown)) possibleMinesAroundList.Add(tileAround.pos);
             else if (tileAround.state.Equals(State.IsMine)) mines++;
@@ -219,14 +216,14 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
         if (mines == minesAround)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(boardParent.gameController.botSpeedValue);
 
-            for (int i = 0; i < possibleMinesAroundList.Count; i++)
+            foreach (Vector2Int vectorPos in possibleMinesAroundList)
             {
-                Tile mine = boardParent.boardDataBase[possibleMinesAroundList[i].x, possibleMinesAroundList[i].y];
+                Tile mine = boardParent.boardDataBase[vectorPos.x, vectorPos.y];
 
                 mine.backImg.sprite = mine.backImgsArray[2];
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(boardParent.gameController.botSpeedValue);
 
                 mine.LeftClick();
                 boardParent.boardChange = true;
@@ -238,9 +235,9 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         {
             if (possibleMinesAroundList.Count + mines == minesAround)
             {
-                for (int i = 0; i < possibleMinesAroundList.Count; i++)
+                foreach (Vector2Int vectorPos in possibleMinesAroundList)
                 {
-                    Tile mine = boardParent.boardDataBase[possibleMinesAroundList[i].x, possibleMinesAroundList[i].y];
+                    Tile mine = boardParent.boardDataBase[vectorPos.x, vectorPos.y];
 
                     mine.state = State.IsMine;
                     mine.backImg.sprite = mine.backImgsArray[1];
@@ -251,11 +248,10 @@ public class Tile : MonoBehaviour, IPointerClickHandler
                     if (boardParent.isGameOver) break;
                 }
 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(boardParent.gameController.botSpeedValue);
             }
         }
     }
-    
 
     #endregion
 }

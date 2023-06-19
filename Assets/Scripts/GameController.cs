@@ -32,12 +32,16 @@ public class GameController : MonoBehaviour
     public static UnityEvent GameOverEvent;
     public static UnityEvent RestartEvent;
 
-    [SerializeField] private GameObject[] boardsArray = new GameObject[3];
+    public GameObject[] boardsArray = new GameObject[3];
     public Sprite[] emojisArray = new Sprite[2];
 
     public int difficulty = 0;
 
+    public float botSpeedValue;
+
+    [SerializeField] 
     public string filePath = "Assets/Resources/JSONBoard.txt";
+
     public BoardsList boardJSON = new BoardsList();
     public bool useJSON;
     public GameObject[] loadJSONButtons = new GameObject[3];
@@ -47,6 +51,13 @@ public class GameController : MonoBehaviour
         GameOverEvent = new UnityEvent();
         RestartEvent = new UnityEvent();
 
+        ReadJSON();
+
+        boardsArray[difficulty].SetActive(true);
+    }
+
+    private void ReadJSON()
+    {
         if (File.Exists(filePath))
         {
             try
@@ -71,8 +82,6 @@ public class GameController : MonoBehaviour
             Debug.LogError("The file does not exist");
             RemoveJSONOption();
         }
-
-        boardsArray[difficulty].SetActive(true);
     }
 
     private void RemoveJSONOption() 
@@ -90,7 +99,7 @@ public class GameController : MonoBehaviour
         UpdateDifficulty(difficultySelected, true);
     }
 
-    public void UpdateDifficulty(int difficultySelected, bool setToUseJSON)
+    private void UpdateDifficulty(int difficultySelected, bool setToUseJSON)
     {
         if (difficulty != difficultySelected)
         {

@@ -3329,6 +3329,7 @@ MonoBehaviour:
   - {fileID: -1292447379, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   - {fileID: -845917399, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   difficulty: 0
+  botSpeedValue: 0.3
   filePath: Assets/Resources/JSONBoard.txt
   boardJSON:
     boards: []

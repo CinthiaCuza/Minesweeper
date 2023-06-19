@@ -9,23 +9,23 @@ public class Board : MonoBehaviour
     public GameController gameController;
     public GameObject gridBoard;
 
-    [HideInInspector] public int maxTiles;
-    [HideInInspector] public int maxMines = 10;
-    [HideInInspector] public int maxrows;
-    [HideInInspector] public int maxcolumns;
+    public int maxTiles;
+    public int maxMines = 10;
+    public int maxrows;
+    public int maxcolumns;
 
     public Image restartEmojiImg;
     public TMP_Text textRemainingMines;
 
-    [HideInInspector] public Tile[,] boardDataBase;
+    public Tile[,] boardDataBase;
 
-    [HideInInspector] public List<Tile> possibleMinesList = new List<Tile>();
-    [HideInInspector] public List<Tile> isMinesList = new List<Tile>();
-    [HideInInspector] public List<Tile> tileWithNumberList = new List<Tile>();
+    public List<Tile> possibleMinesList = new List<Tile>();
+    public List<Tile> isMinesList = new List<Tile>();
+    public List<Tile> tileWithNumberList = new List<Tile>();
 
-    [HideInInspector] public bool boardChange;
-    [HideInInspector] public bool isGameOver;
-    [HideInInspector] public bool botPlaying;
+    public bool boardChange;
+    public bool isGameOver;
+    public bool botPlaying;
 
     private void Start()
     {
