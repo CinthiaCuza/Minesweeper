@@ -35,24 +35,34 @@ public class Board : MonoBehaviour
 
     private void DifficultyData()
     {
-        switch (gameController.difficulty)
+        if (gameController.useJSON)
         {
-            case 0:
-                maxrows = maxcolumns = 8;
-                maxTiles = maxrows * maxcolumns;
-                maxMines = 10;
-                break;
-            case 1:
-                maxrows = maxcolumns = 16;
-                maxTiles = maxrows * maxcolumns;
-                maxMines = 40;
-                break;
-            case 2:
-                maxrows = 30;
-                maxcolumns = 16;
-                maxTiles = 480;
-                maxMines = 99;
-                break;
+            maxrows = gameController.boardJSON.boards[gameController.difficulty].maxrows;
+            maxcolumns = gameController.boardJSON.boards[gameController.difficulty].maxcolumns;
+            maxTiles = maxrows * maxcolumns;
+            maxMines = gameController.boardJSON.boards[gameController.difficulty].maxMines;
+        }
+        else
+        {
+            switch (gameController.difficulty)
+            {
+                case 0:
+                    maxrows = maxcolumns = 8;
+                    maxTiles = maxrows * maxcolumns;
+                    maxMines = 10;
+                    break;
+                case 1:
+                    maxrows = maxcolumns = 16;
+                    maxTiles = maxrows * maxcolumns;
+                    maxMines = 40;
+                    break;
+                case 2:
+                    maxrows = 16;
+                    maxcolumns = 30;
+                    maxTiles = 480;
+                    maxMines = 99;
+                    break;
+            }
         }
 
         boardDataBase = new Tile[maxrows, maxcolumns];
@@ -75,22 +85,31 @@ public class Board : MonoBehaviour
                 tileClass.pos = posNewTile;
                 tileClass.CalculatePosAround();
 
+                if (gameController.useJSON)
+                {
+                    if(gameController.boardJSON.boards[gameController.difficulty].boardTiles[i].row[j] == -1)
+                        tileClass.isMine = true;
+                }
+
                 boardDataBase[i, j] = tileClass;
             }
         }
 
-        List<int> minesPosList = new List<int>();
-
-        while (minesPosList.Count < maxMines)
+        if (!gameController.useJSON)
         {
-            int randomPos = Random.Range(0, maxTiles);
+            List<int> minesPosList = new List<int>();
 
-            if (!minesPosList.Contains(randomPos))
+            while (minesPosList.Count < maxMines)
             {
-                minesPosList.Add(randomPos);
+                int randomPos = Random.Range(0, maxTiles);
 
-                Tile tileWithMine = gridBoard.transform.GetChild(randomPos).GetComponent<Tile>();
-                boardDataBase[tileWithMine.pos.x, tileWithMine.pos.y].isMine = true;
+                if (!minesPosList.Contains(randomPos))
+                {
+                    minesPosList.Add(randomPos);
+
+                    Tile tileWithMine = gridBoard.transform.GetChild(randomPos).GetComponent<Tile>();
+                    boardDataBase[tileWithMine.pos.x, tileWithMine.pos.y].isMine = true;
+                }
             }
         }
     }
@@ -109,12 +128,9 @@ public class Board : MonoBehaviour
         }
     }
 
-    public void RestartButton()
+    public void Restart()
     {
-        GameController.RestartEvent.Invoke();
-
         restartEmojiImg.sprite = gameController.emojisArray[0];
-        
         isGameOver = boardChange = false;
 
         possibleMinesList.Clear();
