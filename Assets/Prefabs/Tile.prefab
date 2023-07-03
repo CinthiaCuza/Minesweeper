@@ -276,14 +276,12 @@ MonoBehaviour:
   isMine: 0
   checkComplete: 0
   backImg: {fileID: 7485326980444692329}
-  backImgsArray:
-  - {fileID: -237479769, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
-  - {fileID: 340949574, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
-  - {fileID: 157908985, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
+  unknownTileImg: {fileID: -237479769, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
+  flagImg: {fileID: 340949574, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
+  selectedTileImg: {fileID: 157908985, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   mineImg: {fileID: 8631929025796325229}
-  mineImgsArray:
-  - {fileID: 1379426130, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
-  - {fileID: 1553811674, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
+  redMineImg: {fileID: 1379426130, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
+  showMineImg: {fileID: 1553811674, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   state: 0
   minesAround: 0
   textMinesAround: {fileID: 4667908214230478125}

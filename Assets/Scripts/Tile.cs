@@ -22,16 +22,20 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     public bool checkComplete;
 
     public Image backImg;
-    public Sprite[] backImgsArray = new Sprite[3];
-
     public Image mineImg;
-    public Sprite[] mineImgsArray = new Sprite[2];
+
+    public Sprite unknownTileImg;
+    public Sprite flagImg;
+    public Sprite selectedTileImg;
+    public Sprite redMineImg;
+    public Sprite showMineImg;
 
     public State state;
 
     public int minesAround;
     public TMP_Text textMinesAround;
     private Color numberColor = new Color();
+    private Dictionary<int, string> colors = new Dictionary<int, string>();
 
     public Vector2Int pos;
     public List<Vector2Int> posAroundList = new List<Vector2Int>();
@@ -40,12 +44,21 @@ public class Tile : MonoBehaviour, IPointerClickHandler
     {
         GameController.GameOverEvent.AddListener(ShowTileGO);
         GameController.RestartEvent.AddListener(DestroyTile);
+
+        colors.Add(1, "#0B24FB");
+        colors.Add(2, "#0E7A11");
+        colors.Add(3, "#FC0D1B");
+        colors.Add(4, "#020B79");
+        colors.Add(5, "#852123");
+        colors.Add(6, "#278786");
+        colors.Add(7, "#000000");
+        colors.Add(8, "#878787");
     }
 
     public void CalculatePosAround()
     {
-        int rows = boardParent.maxrows;
-        int columns = boardParent.maxcolumns;
+        int rows = boardParent.boardConf.maxrows;
+        int columns = boardParent.boardConf.maxcolumns;
 
         if (pos.x - 1 >= 0 && pos.x - 1 < rows && pos.y - 1 >= 0 && pos.y - 1 < columns)
             posAroundList.Add(new Vector2Int(pos.x - 1, pos.y - 1));
@@ -90,11 +103,11 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
             if (isMine)
             {
-                mineImg.sprite = mineImgsArray[0];
+                mineImg.sprite = redMineImg;
                 mineImg.gameObject.SetActive(true);
 
                 boardParent.textRemainingMines.text = "00";
-                boardParent.restartEmojiImg.sprite = boardParent.gameController.emojisArray[1];
+                boardParent.restartEmojiImg.sprite = boardParent.gameController.emojiSad;
                 boardParent.isGameOver = true;
 
                 GameController.GameOverEvent.Invoke();
@@ -115,33 +128,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     private void NumberColor()
     {
-        switch (minesAround)
-        {
-            case 1:
-                ColorUtility.TryParseHtmlString("#0B24FB", out numberColor);
-                break;
-            case 2:
-                ColorUtility.TryParseHtmlString("#0E7A11", out numberColor);
-                break;
-            case 3:
-                ColorUtility.TryParseHtmlString("#FC0D1B", out numberColor);
-                break;
-            case 4:
-                ColorUtility.TryParseHtmlString("#020B79", out numberColor);
-                break;
-            case 5:
-                ColorUtility.TryParseHtmlString("#852123", out numberColor);
-                break;
-            case 6:
-                ColorUtility.TryParseHtmlString("#278786", out numberColor);
-                break;
-            case 7:
-                ColorUtility.TryParseHtmlString("#000000", out numberColor);
-                break;
-            case 8:
-                ColorUtility.TryParseHtmlString("#878787", out numberColor);
-                break;
-        }
+        ColorUtility.TryParseHtmlString(colors[minesAround], out numberColor);
 
         textMinesAround.color = numberColor;
         textMinesAround.text = minesAround.ToString();
@@ -164,19 +151,19 @@ public class Tile : MonoBehaviour, IPointerClickHandler
         {
             case State.Unknown:
                 state = State.PossibleMine;
-                backImg.sprite = backImgsArray[1];
+                backImg.sprite = flagImg;
                 boardParent.possibleMinesList.Add(this);
                 boardParent.UpdateCounter();
                 break;
             case State.PossibleMine:
                 state = State.Unknown;
-                backImg.sprite = backImgsArray[0];
+                backImg.sprite = unknownTileImg;
                 boardParent.possibleMinesList.Remove(this);
                 boardParent.UpdateCounter();
                 break;
             case State.IsMine:
                 state = State.Unknown;
-                backImg.sprite = backImgsArray[0];
+                backImg.sprite = unknownTileImg;
                 boardParent.isMinesList.Remove(this);
                 boardParent.UpdateCounter();
                 break;
@@ -185,13 +172,13 @@ public class Tile : MonoBehaviour, IPointerClickHandler
 
     private void ShowTileGO()
     {
-        if (state.Equals(State.Unknown) && boardParent.isMinesList.Count != boardParent.maxMines && isMine)
+        if (state.Equals(State.Unknown) && boardParent.isMinesList.Count != boardParent.boardConf.maxMines && isMine)
         {
             backImg.enabled = false;
-            mineImg.sprite = mineImgsArray[1];
+            mineImg.sprite = showMineImg;
             mineImg.gameObject.SetActive(true);
         }
-        else if (state.Equals(State.Unknown) && boardParent.isMinesList.Count == boardParent.maxMines) LeftClick();
+        else if (state.Equals(State.Unknown) && boardParent.isMinesList.Count == boardParent.boardConf.maxMines) LeftClick();
     }
 
     private void DestroyTile()
@@ -222,7 +209,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
             {
                 Tile mine = boardParent.boardDataBase[vectorPos.x, vectorPos.y];
 
-                mine.backImg.sprite = mine.backImgsArray[2];
+                mine.backImg.sprite = mine.selectedTileImg;
                 yield return new WaitForSeconds(boardParent.gameController.botSpeedValue);
 
                 mine.LeftClick();
@@ -240,7 +227,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler
                     Tile mine = boardParent.boardDataBase[vectorPos.x, vectorPos.y];
 
                     mine.state = State.IsMine;
-                    mine.backImg.sprite = mine.backImgsArray[1];
+                    mine.backImg.sprite = mine.flagImg;
 
                     boardParent.isMinesList.Add(this);
                     boardParent.UpdateCounter();

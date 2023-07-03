@@ -3325,12 +3325,11 @@ MonoBehaviour:
   - {fileID: 267451846499150342}
   - {fileID: 5955089853666731789}
   - {fileID: 2814427303412060149}
-  emojisArray:
-  - {fileID: -1292447379, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
-  - {fileID: -845917399, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
+  emojiSmile: {fileID: -1292447379, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
+  emojiSad: {fileID: -845917399, guid: c661fb19afe189441ad710b9b4a40eab, type: 3}
   difficulty: 0
   botSpeedValue: 0.3
-  filePath: Assets/Resources/JSONBoard.txt
+  jsonName: /JSONBoard.json
   boardJSON:
     boards: []
   useJSON: 0

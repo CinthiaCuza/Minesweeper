@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.IO;
+using UnityEngine.Networking;
 
 [System.Serializable]
 public class BoardsList
@@ -33,14 +34,18 @@ public class GameController : MonoBehaviour
     public static UnityEvent RestartEvent;
 
     public GameObject[] boardsArray = new GameObject[3];
-    public Sprite[] emojisArray = new Sprite[2];
+
+    public Sprite emojiSmile;
+    public Sprite emojiSad;
 
     public int difficulty = 0;
 
     public float botSpeedValue;
 
     [SerializeField] 
-    public string filePath = "Assets/Resources/JSONBoard.txt";
+    //private string jsonName = "/JSONBoard.json";
+    private string path = "Assets/Resources/JSONBoard.json";
+    //private string jsonURL = 
 
     public BoardsList boardJSON = new BoardsList();
     public bool useJSON;
@@ -58,11 +63,13 @@ public class GameController : MonoBehaviour
 
     private void ReadJSON()
     {
-        if (File.Exists(filePath))
+        //string path = Application.dataPath + jsonName;
+
+        if (File.Exists(path))
         {
             try
             {
-                string textJSON = File.ReadAllText(filePath);
+                string textJSON = File.ReadAllText(path);
                 boardJSON = JsonUtility.FromJson<BoardsList>(textJSON);
 
                 if (boardJSON == null)

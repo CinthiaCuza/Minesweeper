@@ -4,15 +4,20 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+public struct BoardConfiguration
+{
+    public int maxTiles;
+    public int maxMines;
+    public int maxrows;
+    public int maxcolumns;
+}
+
 public class Board : MonoBehaviour
 {
     public GameController gameController;
     public GameObject gridBoard;
 
-    public int maxTiles;
-    public int maxMines = 10;
-    public int maxrows;
-    public int maxcolumns;
+    public BoardConfiguration boardConf;
 
     public Image restartEmojiImg;
     public TMP_Text textRemainingMines;
@@ -37,44 +42,45 @@ public class Board : MonoBehaviour
     {
         if (gameController.useJSON)
         {
-            maxrows = gameController.boardJSON.boards[gameController.difficulty].maxrows;
-            maxcolumns = gameController.boardJSON.boards[gameController.difficulty].maxcolumns;
-            maxTiles = maxrows * maxcolumns;
-            maxMines = gameController.boardJSON.boards[gameController.difficulty].maxMines;
+            boardConf.maxrows = gameController.boardJSON.boards[gameController.difficulty].maxrows;
+            boardConf.maxcolumns = gameController.boardJSON.boards[gameController.difficulty].maxcolumns;
+            boardConf.maxTiles = boardConf.maxrows * boardConf.maxcolumns;
+            boardConf.maxMines = gameController.boardJSON.boards[gameController.difficulty].maxMines;
+
         }
         else
         {
             switch (gameController.difficulty)
             {
                 case 0:
-                    maxrows = maxcolumns = 8;
-                    maxTiles = maxrows * maxcolumns;
-                    maxMines = 10;
+                    boardConf.maxrows = boardConf.maxcolumns = 8;
+                    boardConf.maxTiles = boardConf.maxrows * boardConf.maxcolumns;
+                    boardConf.maxMines = 10;
                     break;
                 case 1:
-                    maxrows = maxcolumns = 16;
-                    maxTiles = maxrows * maxcolumns;
-                    maxMines = 40;
+                    boardConf.maxrows = boardConf.maxcolumns = 16;
+                    boardConf.maxTiles = boardConf.maxrows * boardConf.maxcolumns;
+                    boardConf.maxMines = 40;
                     break;
                 case 2:
-                    maxrows = 16;
-                    maxcolumns = 30;
-                    maxTiles = 480;
-                    maxMines = 99;
+                    boardConf.maxrows = 16;
+                    boardConf.maxcolumns = 30;
+                    boardConf.maxTiles = 480;
+                    boardConf.maxMines = 99;
                     break;
             }
         }
 
-        boardDataBase = new Tile[maxrows, maxcolumns];
+        boardDataBase = new Tile[boardConf.maxrows, boardConf.maxcolumns];
     }
 
     private void CreateBoard()
     {
-        textRemainingMines.text = maxMines.ToString();
+        textRemainingMines.text = boardConf.maxMines.ToString();
 
-        for (int i = 0; i < maxrows; i++)
+        for (int i = 0; i < boardConf.maxrows; i++)
         {
-            for(int j = 0; j < maxcolumns; j++)
+            for(int j = 0; j < boardConf.maxcolumns; j++)
             {
                 GameObject newTile = Instantiate(gameController.tile, gridBoard.transform);
                 
@@ -99,9 +105,9 @@ public class Board : MonoBehaviour
         {
             List<int> minesPosList = new List<int>();
 
-            while (minesPosList.Count < maxMines)
+            while (minesPosList.Count < boardConf.maxMines)
             {
-                int randomPos = Random.Range(0, maxTiles);
+                int randomPos = Random.Range(0, boardConf.maxTiles);
 
                 if (!minesPosList.Contains(randomPos))
                 {
@@ -117,11 +123,11 @@ public class Board : MonoBehaviour
     public void UpdateCounter()
     {
         int maxFlags = possibleMinesList.Count + isMinesList.Count;
-        int remainingMines = maxMines - maxFlags;
+        int remainingMines = boardConf.maxMines - maxFlags;
 
         if(remainingMines >= 0) textRemainingMines.text = remainingMines.ToString("D2");
 
-        if (isMinesList.Count == maxMines)
+        if (isMinesList.Count == boardConf.maxMines)
         {
             isGameOver = true;
             GameController.GameOverEvent.Invoke();
@@ -130,7 +136,7 @@ public class Board : MonoBehaviour
 
     public void Restart()
     {
-        restartEmojiImg.sprite = gameController.emojisArray[0];
+        restartEmojiImg.sprite = gameController.emojiSmile;
         isGameOver = boardChange = false;
 
         possibleMinesList.Clear();

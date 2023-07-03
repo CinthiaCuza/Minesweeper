@@ -38,7 +38,7 @@ public class Bot : MonoBehaviour
         foreach (Tile tile in board.possibleMinesList)
         {
             tile.state = State.Unknown;
-            tile.backImg.sprite = tile.backImgsArray[0];
+            tile.backImg.sprite = tile.unknownTileImg;
         }
 
         board.possibleMinesList.Clear();
@@ -46,8 +46,8 @@ public class Bot : MonoBehaviour
 
         if (board.tileWithNumberList.Count == 0)
         {
-            Tile tileToShow = board.boardDataBase[Random.Range(0, board.maxrows), Random.Range(0, board.maxcolumns)];
-            tileToShow.backImg.sprite = tileToShow.backImgsArray[2];
+            Tile tileToShow = board.boardDataBase[Random.Range(0, board.boardConf.maxrows), Random.Range(0, board.boardConf.maxcolumns)];
+            tileToShow.backImg.sprite = tileToShow.selectedTileImg;
 
             yield return new WaitForSeconds(board.gameController.botSpeedValue);
 
@@ -97,6 +97,5 @@ public class Bot : MonoBehaviour
         {
             StopBot();
         }
-            
     }
 }
